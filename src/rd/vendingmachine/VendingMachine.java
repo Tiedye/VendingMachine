@@ -170,8 +170,8 @@ public class VendingMachine {
         //ciara
         this.currentBalance = 0;
         this.bank = new HashMap<>();
-        this.itemsInTray = new HashList<>();
-        this.coinsInTray = new HashList<>();
+        this.itemsInTray = new Vector<>();
+        this.coinsInTray = new Vector<>();
         this.password = code;
         this.slots = new HashMap<>();
         this.keypad = new UserInterface(this);
