@@ -15,6 +15,7 @@ public class UserInterface {
         READY,
         ERROR
     }
+    
     private final VendingMachine parent;
     private InterfaceMode mode;
     private String selection;
@@ -30,6 +31,18 @@ public class UserInterface {
     public void pushButton(char button) {
         if(mode != InterfaceMode.ERROR){
             selection += Character.toLowerCase(button);
+            boolean isPrefix = false;
+            for (String slot : parent.slots.keySet()){
+                if (slot.startsWith(selection)) {
+                    isPrefix = true;
+                    break;
+                }
+            }
+            if(!isPrefix) {
+                display = "INVALID SELECTION";
+                selection = "";
+                return;
+            }
             if(parent.slots.containsKey(selection)){
                 if(parent.currentBalance >= parent.slots.get(selection).price){
                     parent.currentBalance -= parent.slots.get(selection).price;

@@ -328,6 +328,7 @@ public class Main {
     }
 
     static String[] combineLinkedTerms(String[] terms) {
+        //ciara
         ArrayList<String> newTerms = new ArrayList<>();
         boolean inQuote = false;
         for (String term : terms) {

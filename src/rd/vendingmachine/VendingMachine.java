@@ -20,6 +20,10 @@ public class VendingMachine {
     private ChangeMode changeMode;
     public final UserInterface keypad;
 
+    /**
+     * 
+     * @param slot 
+     */
     void selectSlot(String slot) {
         //ciara
         Item item = slots.get(slot.toLowerCase()).removeItem();
@@ -54,8 +58,7 @@ public class VendingMachine {
 
     public List<Item> takeItems() {
         //ciara
-        List<Item> items;
-        items = itemsInTray;
+        List<Item> items = itemsInTray;
         itemsInTray = new ArrayList<>();
         return items;
     }
@@ -70,8 +73,7 @@ public class VendingMachine {
     
     public List<Coin> takeChange() {
         //ciara
-        List<Coin> coins;
-        coins = coinsInTray;
+        List<Coin> coins = coinsInTray;
         coinsInTray = new ArrayList<>();
         return coins;
     }
@@ -228,13 +230,13 @@ public class VendingMachine {
 
     public VendingMachine(String code) {
         //ciara
-        this.currentBalance = 0;
-        this.bank = new HashMap<>();
-        this.itemsInTray = new ArrayList<>();
-        this.coinsInTray = new ArrayList<>();
-        this.password = code;
-        this.slots = new HashMap<>();
-        this.keypad = new UserInterface(this);
+        currentBalance = 0;
+        bank = new HashMap<>();
+        itemsInTray = new ArrayList<>();
+        coinsInTray = new ArrayList<>();
+        password = code;
+        slots = new HashMap<>();
+        keypad = new UserInterface(this);
     }
 
     public enum ChangeMode {

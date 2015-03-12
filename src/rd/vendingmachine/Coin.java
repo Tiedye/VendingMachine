@@ -1,17 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package rd.vendingmachine;
 
 import java.util.Objects;
 
-/**
- *
- * @author 335580965
- */
 public class Coin {
+    //ciara
     /**
      * The value of the coin, this cannot be changed
      */
@@ -30,11 +23,6 @@ public class Coin {
         this.name = name;
         this.value = value;
     }
-
-    @Override
-    public String toString() {
-        return name;
-    }
     
     /**
      * Created an identical copy of the coin
@@ -42,6 +30,12 @@ public class Coin {
      */
     public Coin copy(){
         return new Coin(name, value);
+    }
+    
+    //automatically generated for maps and display
+    @Override
+    public String toString() {
+        return name;
     }
 
     @Override
