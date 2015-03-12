@@ -72,7 +72,7 @@ public class Main {
                 + "-insertcoin [coin name]\n"
                 + "  |inserts coin into vending machine\n\n"
                 + "-pushbutton [button]\n"
-                + "  |pushes a button on the vending machine keypad.  If the selection matches a slot, the item in that slot will be purchased\n\n"
+                + "  |pushes a button on the vending machine keypad (A-Z, 0-9).  If the selection matches a slot, the item in that slot will be purchased\n\n"
                 + "-getchange\n"
                 + "  |puts your change into the change tray\n\n"
                 + "-getitemsintray\n"
