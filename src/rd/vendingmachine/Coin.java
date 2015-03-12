@@ -1,10 +1,9 @@
-
+//Solely Ciara's Section
 package rd.vendingmachine;
 
 import java.util.Objects;
 
 public class Coin {
-    //ciara
     /**
      * The value of the coin, this cannot be changed
      */
