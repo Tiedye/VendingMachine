@@ -12,9 +12,20 @@ import java.util.Objects;
  * @author 335580965
  */
 public class Coin {
+    /**
+     * The value of the coin, this cannot be changed
+     */
     public final int value;
+    /**
+     * The name of the coin, this cannot be changed
+     */
     public final String name;
     
+    /**
+     * Initialize the coin
+     * @param name the name of the coin
+     * @param value the value in base currency units
+     */
     public Coin(String name, int value){
         this.name = name;
         this.value = value;
@@ -25,6 +36,10 @@ public class Coin {
         return name;
     }
     
+    /**
+     * Created an identical copy of the coin
+     * @return the copy
+     */
     public Coin copy(){
         return new Coin(name, value);
     }

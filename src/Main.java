@@ -27,25 +27,16 @@ public class Main {
         VendingMachine vm = new VendingMachine("12345");
         vm.openDoor("12345");
         try {
-            vm.addSlot("A1");
-            vm.addSlot("A2");
-            vm.addSlot("A3");
-            vm.addSlot("B1");
-            vm.addSlot("B2");
-            vm.addSlot("B3");
-            vm.addSlot("C1");
-            vm.addSlot("C2");
-            vm.addSlot("C3");
-            vm.slotPrice("A1", 150);
-            vm.slotPrice("A2", 250);
-            vm.slotPrice("A3", 150);
-            vm.slotPrice("B1", 200);
-            vm.slotPrice("B2", 125);
-            vm.slotPrice("B3", 175);
-            vm.slotPrice("C1", 100);
-            vm.slotPrice("C2", 50);
-            vm.slotPrice("C3", 150);
-            for (int i = 0; i < 10; i++) {
+            vm.addSlot("A1", 150);
+            vm.addSlot("A2", 250);
+            vm.addSlot("A3", 150);
+            vm.addSlot("B1", 200);
+            vm.addSlot("B2", 125);
+            vm.addSlot("B3", 175);
+            vm.addSlot("C1", 100);
+            vm.addSlot("C2", 50);
+            vm.addSlot("C3", 150);
+            for (int i = 0; i < 2; i++) {
                 vm.addItem("A1", new Item(50, "Mars", "calories: 242, fat: 9g, carbs: 37g, protein: 2g", "RD go ahead and google it"));
                 vm.addItem("A2", new Item(54, "Smarties", "calories: 140, fat: 4g, carbs: 24g, protein: 1g", "RD go ahead and google it"));
                 vm.addItem("A3", new Item(60, "Twix", "calories: 280, fat: 14g, carbs: 37g, protein: 3g", "RD go ahead and google it"));

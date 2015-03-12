@@ -23,7 +23,8 @@ public class VendingMachine {
 
     void selectSlot(String slot) {
         //ciara
-        itemsInTray.add(slots.get(slot.toLowerCase()).removeItem());
+        Item item = slots.get(slot.toLowerCase()).removeItem();
+        if(item != null) itemsInTray.add(item);
     }
 
     public boolean acceptsCoin(Coin coin) {
@@ -34,6 +35,11 @@ public class VendingMachine {
         return false;
     }
     
+    
+    /**
+     * Gets all of the coins accepted by the machine.
+     * @return 
+     */
     public Set<Coin> getAcceptedCoins(){
         return bank.keySet();
     }
@@ -58,11 +64,14 @@ public class VendingMachine {
         return items;
     }
 
+    /**
+     * Converts the current balance into coins and adds those coins into the coin tray
+     */
     public void getChange() {
         //daniel
         //puts coins equal to the current balance into the coin tray
     }
-
+    
     public List<Coin> takeChange() {
         //ciara
         List<Coin> coins;
@@ -70,7 +79,13 @@ public class VendingMachine {
         coinsInTray = new ArrayList<>();
         return coins;
     }
-
+    
+    /**
+     * Adds an item into an item slot
+     * @param slot the slot that the item will be added to
+     * @param item the item to be added
+     * @throws DoorClosedException 
+     */
     public void addItem(String slot, Item item) throws DoorClosedException {
         //daniel
         if (!open) {
@@ -81,7 +96,7 @@ public class VendingMachine {
     }
 
     public void setDenominations(Set<Coin> coins) throws DoorClosedException {
-        //daniel
+        //ciara
         // this first clears the bank, then adds each coin type to the bank
         // this allows the bank to accept those types of coins
         if (!open) {
@@ -94,6 +109,11 @@ public class VendingMachine {
         }
     }
     
+    /**
+     * Adds coins to the machines bank
+     * @param coins coins to be added to the machine
+     * @throws DoorClosedException 
+     */
     public void addCoins(List<Coin> coins) throws DoorClosedException{
         //daniel
         if (!open) {
@@ -109,6 +129,11 @@ public class VendingMachine {
         }
     }
     
+    /**
+     * Gets all of the coins in the machines bank, the coins are removed from the machine
+     * @return the coins in the machine
+     * @throws DoorClosedException 
+     */
     public List<Coin> removeCoins() throws DoorClosedException{
         //daniel
         if (!open) {
@@ -124,16 +149,13 @@ public class VendingMachine {
         }
         return coins;
     }
- 
-    public void addSlot(String position) throws DoorClosedException {
-        //daniel
-        if (!open) {
-            // this can only be done if the vending machine is open
-            throw new DoorClosedException();
-        }
-        slots.put(position.toLowerCase(), new ItemSlot(0));
-    }
 
+    /**
+     * Adds a item slot to the machine
+     * @param position the position of the slot
+     * @param price the price of the slot in base currency units
+     * @throws DoorClosedException 
+     */
     public void addSlot(String position, int price) throws DoorClosedException {
         //daniel
         if (!open) {
@@ -143,10 +165,21 @@ public class VendingMachine {
         slots.put(position.toLowerCase(), new ItemSlot(price));
     }
     
+    /**
+     * Checks if a slot exists in the machine
+     * @param slot the slot to check
+     * @return if it exists
+     */
     public boolean hasSlot(String slot) {
         return slots.containsKey(slot.toLowerCase());
     }
-
+    
+    /**
+     * Sets the price associated with a slot on the machine.
+     * @param slot the slot to be modified
+     * @param price the new price in base currency units
+     * @throws DoorClosedException 
+     */
     public void slotPrice(String slot, int price) throws DoorClosedException {
         //daniel
         if (!open) {
@@ -156,6 +189,11 @@ public class VendingMachine {
         slots.get(slot.toLowerCase()).price = price;
     }
 
+    /**
+     * Opens the door on the machine
+     * @param code the code to open the door
+     * @return weather the door open was successful
+     */
     public boolean openDoor(String code) {
         //daniel
         if (code == password && !open) {
@@ -164,7 +202,11 @@ public class VendingMachine {
         }
         return false;
     }
-
+    
+    /**
+     * Closed the door on the machine
+     * @return if the door close was successful
+     */
     public boolean closeDoor() {
         //daniel
         if (open){
@@ -173,7 +215,12 @@ public class VendingMachine {
         }
         return false;
     }
-
+    
+    /**
+     * Sets the way in which change is given from the machine
+     * @param mode the mode
+     * @throws DoorClosedException 
+     */
     public void setChangeMode(ChangeMode mode) throws DoorClosedException {
         //daniel
         if (!open) {
@@ -197,7 +244,11 @@ public class VendingMachine {
     public enum ChangeMode {
         MAXIMIZE_COIN_COUNT, MINIMIZE_COINS_GIVEN
     }
-
+    
+    /**
+     * The string representation of the machine.  All slots are listed with their prices and top items.
+     * @return the representation
+     */
     @Override
     public String toString() {
         StringBuilder string = new StringBuilder();
