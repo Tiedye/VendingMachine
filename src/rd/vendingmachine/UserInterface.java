@@ -29,7 +29,7 @@ public class UserInterface {
 
     public void pushButton(char button) {
         if(mode != InterfaceMode.ERROR){
-            selection += button;
+            selection += Character.toLowerCase(button);
             if(parent.slots.containsKey(selection)){
                 if(parent.currentBalance >= parent.slots.get(selection).price){
                     parent.currentBalance -= parent.slots.get(selection).price;

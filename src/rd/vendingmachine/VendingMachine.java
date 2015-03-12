@@ -23,7 +23,7 @@ public class VendingMachine {
 
     void selectSlot(String slot) {
         //ciara
-        itemsInTray.add(slots.get(slot).removeItem());
+        itemsInTray.add(slots.get(slot.toLowerCase()).removeItem());
     }
 
     public boolean acceptsCoin(Coin coin) {
@@ -77,7 +77,7 @@ public class VendingMachine {
             // this can only be done if the vending machine is open
             throw new DoorClosedException();
         }
-        slots.get(slot).addItem(item);
+        slots.get(slot.toLowerCase()).addItem(item);
     }
 
     public void setDenominations(Set<Coin> coins) throws DoorClosedException {
@@ -131,7 +131,7 @@ public class VendingMachine {
             // this can only be done if the vending machine is open
             throw new DoorClosedException();
         }
-        slots.put(position, new ItemSlot(0));
+        slots.put(position.toLowerCase(), new ItemSlot(0));
     }
 
     public void addSlot(String position, int price) throws DoorClosedException {
@@ -140,11 +140,11 @@ public class VendingMachine {
             // this can only be done if the vending machine is open
             throw new DoorClosedException();
         }
-        slots.put(position, new ItemSlot(price));
+        slots.put(position.toLowerCase(), new ItemSlot(price));
     }
     
     public boolean hasSlot(String slot) {
-        return slots.containsKey(slot);
+        return slots.containsKey(slot.toLowerCase());
     }
 
     public void slotPrice(String slot, int price) throws DoorClosedException {
@@ -153,7 +153,7 @@ public class VendingMachine {
             // this can only be done if the vending machine is open
             throw new DoorClosedException();
         }
-        slots.get(slot).price = price;
+        slots.get(slot.toLowerCase()).price = price;
     }
 
     public boolean openDoor(String code) {
