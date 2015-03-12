@@ -53,6 +53,7 @@ public class Main {
             coins.add(new Coin("loonie", 100));
             coins.add(new Coin("toonie", 200));
             vm.setDenominations(coins);
+            vm.closeDoor();
         } catch (DoorClosedException e) {
             System.err.println("The door is closed.  You can't do that!");
         }

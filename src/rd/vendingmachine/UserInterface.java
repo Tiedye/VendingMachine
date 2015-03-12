@@ -15,7 +15,7 @@ public class UserInterface {
         READY,
         ERROR
     }
-    private VendingMachine parent;
+    private final VendingMachine parent;
     private InterfaceMode mode;
     private String selection;
     String display;

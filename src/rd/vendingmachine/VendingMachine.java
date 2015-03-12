@@ -14,7 +14,7 @@ public class VendingMachine {
     List<Item> itemsInTray;
     List<Coin> coinsInTray;
     Map<String, ItemSlot> slots;
-    private String password;
+    private final String password;
     private Map<Coin, Integer> bank;
     private boolean open;
     private ChangeMode changeMode;
@@ -28,10 +28,7 @@ public class VendingMachine {
 
     public boolean acceptsCoin(Coin coin) {
         //ciara
-        if (bank.containsKey(coin)) {
-            return true;
-        }
-        return false;
+        return bank.containsKey(coin);
     }
     
     
@@ -195,7 +192,7 @@ public class VendingMachine {
      */
     public boolean openDoor(String code) {
         //daniel
-        if (code == password && !open) {
+        if (code.equals(password) && !open) {
             open = true;
             return true;
         }
@@ -251,10 +248,10 @@ public class VendingMachine {
     @Override
     public String toString() {
         StringBuilder string = new StringBuilder();
-        ArrayList<String> sortedSlots = new ArrayList<String>(slots.keySet());
+        ArrayList<String> sortedSlots = new ArrayList<>(slots.keySet());
         Collections.sort(sortedSlots);
         for (String slot:sortedSlots){
-            string.append(slot + ": " + slots.get(slot).toString() + "\n");
+            string.append(slot).append(": ").append(slots.get(slot).toString()).append("\n");
         }
         return string.toString();
     }
