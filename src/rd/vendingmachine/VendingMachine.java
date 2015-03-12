@@ -116,7 +116,13 @@ public class VendingMachine {
      */
     public void getChange() {
         //daniel
-        //puts coins equal to the current balance into the coin tray
+        List<Set<Map<Coin, Integer>>> state = new ArrayList<>(currentBalance);
+        for (int i = 0; i < currentBalance; i++){
+            Set<Map<Coin, Integer>> currentState = new HashSet<>();
+            for (Coin coin : bank.keySet()){
+                if (i-coin.value > 0)
+            }
+        }
         keypad.display = "READY";
     }
     

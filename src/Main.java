@@ -353,6 +353,7 @@ public class Main {
                     }
                     break;
                 default:
+                    // if its not a command print an error
                     System.err.println(command[0] + " is not a command.");
             }
 
