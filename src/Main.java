@@ -57,7 +57,7 @@ public class Main {
         } catch (DoorClosedException e) {
             System.err.println("The door is closed.  You can't do that!");
         }
-        
+
         System.out.println("To interact with the vending machine, type a command from the list:\n"
                 + "-insertcoin [coin name]\n"
                 + "  |inserts coin into vending machine\n\n"
@@ -88,11 +88,11 @@ public class Main {
                 + "  |add coins to the machine\n\n"
                 + "-removecoins\n"
                 + "  |remove all the coins from the machine\n\n");
-        
+
         while (true) {
             System.out.print(">");
             String input = scanner.nextLine();
-            String[] command = input.split(" ");
+            String[] command = combineLinkedTerms(input.split(" "));
             if (command.length == 0) {
                 break;
             }
@@ -108,7 +108,7 @@ public class Main {
                                     break search;
                                 }
                             }
-                            System.err.println(command[1] +" is not a valid coin.");
+                            System.err.println(command[1] + " is not a valid coin.");
                         }
                     } else {
                         System.err.println("This command takes 2 arguments.");
@@ -325,6 +325,28 @@ public class Main {
 
         }
 
+    }
+
+    static String[] combineLinkedTerms(String[] terms) {
+        ArrayList<String> newTerms = new ArrayList<>();
+        boolean inQuote = false;
+        for (String term : terms) {
+            if (inQuote) {
+                if (term.endsWith("\"")) {
+                    inQuote = false;
+                    term = term.substring(0, term.length()-1);
+                }
+                newTerms.add(newTerms.size() - 1, newTerms.get(newTerms.size() - 1) + " " + term);
+                newTerms.remove(newTerms.size() - 1);
+            } else if (term.startsWith("\"")) {
+                inQuote = true;
+                term = term.substring(1);
+                newTerms.add(term);
+            } else {
+                newTerms.add(term);
+            }
+        }
+        return newTerms.toArray(new String[newTerms.size()]);
     }
 
 }
