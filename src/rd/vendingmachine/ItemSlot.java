@@ -5,6 +5,7 @@
  */
 package rd.vendingmachine;
 
+import java.text.NumberFormat;
 import java.util.Stack;
 
 /**
@@ -26,5 +27,10 @@ public class ItemSlot extends Stack<Item> {
     
     public Item removeItem(){
         return pop();
+    }
+
+    @Override
+    public String toString() {
+        return firstElement().name + " (" + NumberFormat.getCurrencyInstance().format(price / 100.0) + ")";
     }
 }

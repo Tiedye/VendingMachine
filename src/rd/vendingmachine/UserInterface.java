@@ -15,10 +15,10 @@ public class UserInterface {
         READY,
         ERROR
     }
-    VendingMachine parent;
-    InterfaceMode mode;
-    String selection;
-    public String display;
+    private VendingMachine parent;
+    private InterfaceMode mode;
+    private String selection;
+    String display;
     
     public UserInterface(VendingMachine parent){
         mode = InterfaceMode.READY;
@@ -35,6 +35,8 @@ public class UserInterface {
                     parent.currentBalance -= parent.slots.get(selection).price;
                     parent.selectSlot(selection);
                     parent.getChange();
+                    display = "READY";
+                    selection = "";
                 }
                 else{
                     display = "NOT ENOUGH MONEY";
@@ -49,6 +51,6 @@ public class UserInterface {
     }
 
     public String readDisplay() {
-        return display;
+        return "Display: " + display;
     }
 }
