@@ -67,9 +67,40 @@ public class Main {
         } catch (DoorClosedException e) {
             System.err.println("The door is closed.  You can't do that!");
         }
-
-        System.out.println(vm.keypad.readDisplay());
+        
+        System.out.println("To interact with the vending machine, type a command from the list:\n"
+                + "-insertcoin [coin name]\n"
+                + "  |inserts coin into vending machine\n\n"
+                + "-pushbutton [button]\n"
+                + "  |pushes a button on the vending machine keypad.  If the selection matches a slot, the item in that slot will be purchased\n\n"
+                + "-getchange\n"
+                + "  |puts your change into the change tray\n\n"
+                + "-getitemsintray\n"
+                + "  |gets the items out of the item tray\n\n"
+                + "-getcoinsintray\n"
+                + "  |gets the coins out of the coin tray\n\n"
+                + "-readdisplay\n"
+                + "  |reads the text currently on the display\n\n"
+                + "-viewslots\n"
+                + "  |shows all of the slots in the machine, and the items on the top of that slot\n\n\n"
+                + "The remaining commands are for a vendor who wishes to reload or modify the vending machine.\n"
+                + "-opendoor [code]\n"
+                + "  |open the vending machine door so you can change it\n\n"
+                + "-closedoor\n"
+                + "  |close it so other people can't steal stuff\n\n"
+                + "-additem [slot] [name] <weight> <nutrition> <ingredients>\n"
+                + "  |add an item to the vending machine\n\n"
+                + "-addslot [slot to add]\n"
+                + "  |add a slot to the vending machine\n\n"
+                + "-setslotprice [slot] [price]\n"
+                + "  |change the price on a slot in the vending machine\n\n"
+                + "-addcoins [coin name] <coin name> <coin name> ...\n"
+                + "  |add coins to the machine\n\n"
+                + "-removecoins\n"
+                + "  |remove all the coins from the machine\n\n");
+        
         while (true) {
+            System.out.print(">");
             String input = scanner.nextLine();
             String[] command = input.split(" ");
             if (command.length == 0) {
