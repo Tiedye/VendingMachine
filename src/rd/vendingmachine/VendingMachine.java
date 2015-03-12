@@ -69,6 +69,7 @@ public class VendingMachine {
     public void getChange() {
         //daniel
         //puts coins equal to the current balance into the coin tray
+        keypad.display = "READY";
     }
     
     public List<Coin> takeChange() {

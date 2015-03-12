@@ -53,11 +53,21 @@ public class Main {
             coins.add(new Coin("loonie", 100));
             coins.add(new Coin("toonie", 200));
             vm.setDenominations(coins);
+            List<Coin> coinsToAdd = new ArrayList<>();
+            for (int i = 0; i < 15; i++) {
+                coinsToAdd.add(new Coin("quarter", 25));
+                coinsToAdd.add(new Coin("nickel", 5));
+                coinsToAdd.add(new Coin("dime", 10));
+                coinsToAdd.add(new Coin("loonie", 100));
+                coinsToAdd.add(new Coin("toonie", 200));
+            }
+            vm.addCoins(coinsToAdd);
             vm.closeDoor();
         } catch (DoorClosedException e) {
             System.err.println("The door is closed.  You can't do that!");
         }
 
+        // prints the instructions for using the commands
         System.out.println("To interact with the vending machine, type a command from the list:\n"
                 + "-insertcoin [coin name]\n"
                 + "  |inserts coin into vending machine\n\n"
@@ -90,15 +100,17 @@ public class Main {
                 + "  |remove all the coins from the machine\n\n");
 
         while (true) {
+            // gets the users command
             System.out.print(">");
             String input = scanner.nextLine();
+            // splits up the command into terms and groups terms that are in quotations into single terms
             String[] command = combineLinkedTerms(input.split(" "));
-            if (command.length == 0) {
-                break;
-            }
+            // selects the command and checks if there are the correct number of arguments for the command
+            // if a command requires the door to be open and its closed, output an error
             switch (command[0]) {
                 case "insertcoin":
                     if (command.length == 2) {
+                        // checks if the paramater is a valid coin, if it is output it, otherwise print an error
                         search:
                         {
                             for (Coin coin : vm.getAcceptedCoins()) {
@@ -116,9 +128,10 @@ public class Main {
                     break;
                 case "pushbutton":
                     if (command.length == 2) {
+                        // checks if the button is valid, if it is push it, otherwise print an error
                         if (command[1].length() == 1 && (Character.isLetter(command[1].charAt(0)) || Character.isDigit(command[1].charAt(0)))) {
                             vm.keypad.pushButton(command[1].charAt(0));
-                            System.out.println("The " + command[1] + " button was pushed.");
+                            System.out.println("The " + command[1].toUpperCase() + " button was pushed.");
                         } else {
                             System.err.println("That is not a valid button.");
                         }
@@ -128,6 +141,7 @@ public class Main {
                     break;
                 case "getchange":
                     if (command.length == 1) {
+                        // puts the users change into the change tray
                         vm.getChange();
                         System.out.println("Your change has been put in the coin tray.");
                     } else {
@@ -136,6 +150,7 @@ public class Main {
                     break;
                 case "getitemsintray":
                     if (command.length == 1) {
+                        // takes the items out of the item tray and displays the items on screen
                         System.out.println("Items taken:");
                         for (Item item : vm.takeItems()) {
                             System.out.println("  " + item);
@@ -146,6 +161,7 @@ public class Main {
                     break;
                 case "getcoinsintray":
                     if (command.length == 1) {
+                        // takes the items out of the item tray and displays the items on screen
                         System.out.println("Coins taken:");
                         for (Coin coin : vm.takeChange()) {
                             System.out.println("  " + coin);
@@ -156,6 +172,7 @@ public class Main {
                     break;
                 case "readdisplay":
                     if (command.length == 1) {
+                        // outputs the display to the screen
                         System.out.println(vm.keypad.readDisplay());
                     } else {
                         System.err.println("That command doesn't take arguments.");
@@ -163,6 +180,7 @@ public class Main {
                     break;
                 case "viewslots":
                     if (command.length == 1) {
+                        // output vending machine to the screen
                         System.out.println(vm);
                     } else {
                         System.err.println("That command doesn't take arguments.");
@@ -170,6 +188,7 @@ public class Main {
                     break;
                 case "opendoor":
                     if (command.length == 2) {
+                        // tries to open the door, if it fails print an error
                         if (vm.openDoor(command[1])) {
                             System.out.println("The door has been opened.");
                         } else {
@@ -181,6 +200,7 @@ public class Main {
                     break;
                 case "closedoor":
                     if (command.length == 1) {
+                        // tries to close door, if it fails print an error
                         if (vm.closeDoor()) {
                             System.out.println("The door has been closed.");
                         } else {
@@ -192,12 +212,15 @@ public class Main {
                     break;
                 case "additem":
                     if (command.length >= 3 && command.length <= 6) {
+                        // reads the first two commands as the slot and item name
                         String slot = command[1];
                         if (!vm.hasSlot(slot)) {
+                            // if the slot doesn't exist output an error
                             System.err.println("Slot " + slot + " does not exist.");
                             break;
                         }
                         String name = command[2];
+                        // read the weight if given, output an error if its not a valid number
                         double weight = 0.0;
                         if (command.length >= 4) {
                             try {
@@ -207,15 +230,18 @@ public class Main {
                                 break;
                             }
                         }
+                        // read the nutrition if given
                         String nutrition = "";
                         if (command.length >= 5) {
                             nutrition = command[4];
                         }
+                        // read the ingredients if given
                         String ingredients = "";
                         if (command.length >= 6) {
                             ingredients = command[5];
                         }
                         try {
+                            // adds the item to the specified slot
                             Item item = new Item(weight, name, nutrition, ingredients);
                             vm.addItem(slot, item);
                             System.out.println("Item " + item + " added to slot " + slot + ".");
@@ -228,7 +254,9 @@ public class Main {
                     break;
                 case "addslot":
                     if (command.length == 2 || command.length == 3) {
+                        // check if the slot already exists
                         if (!vm.hasSlot(command[1])) {
+                            // read the price if given, and ouput an error if the price is not an integer
                             int price = 0;
                             if (command.length == 3) {
                                 try {
@@ -239,6 +267,7 @@ public class Main {
                                 }
                             }
                             try {
+                                // add the slot to the machine
                                 vm.addSlot(command[1], price);
                                 System.out.println("Slot " + command[1] + " added to the machine at a cost of " + price + ".");
                             } catch (DoorClosedException e) {
@@ -253,8 +282,10 @@ public class Main {
                     break;
                 case "setslotprice":
                     if (command.length == 3) {
+                        // check if the slot exists
                         if (vm.hasSlot(command[1])) {
                             int price;
+                            // checks if the input is a valid integer
                             try {
                                 price = Integer.parseInt(command[2]);
                             } catch (NumberFormatException e) {
@@ -262,6 +293,7 @@ public class Main {
                                 break;
                             }
                             try {
+                                // set the slots price to the given value
                                 vm.slotPrice(input, price);
                                 System.out.println("Slot " + command[1] + " set to price " + price + ".");
                             } catch (DoorClosedException e) {
@@ -275,9 +307,10 @@ public class Main {
                     }
                     break;
                 case "addcoins":
-                    command:
-                    {
-                        if (command.length > 1) {
+                    if (command.length > 1) {
+                        // processes each paramater, checks if its a coin if so add it to a list of coins to be added
+                        paramaterLoop:
+                        {
                             List<Coin> coins = new ArrayList<>();
                             for (int i = 1; i < command.length; i++) {
                                 search:
@@ -288,22 +321,25 @@ public class Main {
                                             break search;
                                         }
                                     }
+                                    // if any coin is not a valid coin, dont add any of the coins to the machine
                                     System.err.println(command[i] + " is not a valid coin.");
-                                    break command;
+                                    break paramaterLoop;
                                 }
                             }
                             try {
+                                // add the coins to the machine
                                 vm.addCoins(coins);
                             } catch (DoorClosedException e) {
                                 System.err.println("The door is closed, you can't do that.");
                             }
-                        } else {
-                            System.err.println("That command takes at least argument.");
                         }
+                    } else {
+                        System.err.println("That command takes at least argument.");
                     }
                     break;
                 case "removecoins":
                     if (command.length == 1) {
+                        // removes all the coins and prints them to the screen
                         List<Coin> coins;
                         try {
                             coins = vm.removeCoins();
@@ -335,7 +371,7 @@ public class Main {
             if (inQuote) {
                 if (term.endsWith("\"")) {
                     inQuote = false;
-                    term = term.substring(0, term.length()-1);
+                    term = term.substring(0, term.length() - 1);
                 }
                 newTerms.add(newTerms.size() - 1, newTerms.get(newTerms.size() - 1) + " " + term);
                 newTerms.remove(newTerms.size() - 1);

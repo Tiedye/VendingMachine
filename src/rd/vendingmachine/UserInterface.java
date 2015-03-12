@@ -48,7 +48,6 @@ public class UserInterface {
                     parent.currentBalance -= parent.slots.get(selection).price;
                     parent.selectSlot(selection);
                     parent.getChange();
-                    display = "READY";
                     selection = "";
                 }
                 else{
