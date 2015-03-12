@@ -1,8 +1,7 @@
-
+//Solely Ciara's Section
 package rd.vendingmachine;
 
 public class Item {
-    //ciara
     /**
      * The weight of the item, this cannot be changed
      */
@@ -34,6 +33,7 @@ public class Item {
         this.ingredients = ingredients;
     }
 
+    //automatically generated for display
     @Override
     public String toString() {
         return name + " (weight: " + weight + ", nutrition: " + nutrition + ", ingredients: " + ingredients + ')';

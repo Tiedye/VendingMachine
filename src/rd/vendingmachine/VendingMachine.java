@@ -1,15 +1,11 @@
+//Shared section b/w Daniel and Ciara (authorship of functions noted below)
 package rd.vendingmachine;
 
 import java.text.NumberFormat;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
-import java.util.Set;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 public class VendingMachine {
-
+    //Ciara's section begins (all code within she has written)
     int currentBalance;
     List<Item> itemsInTray;
     List<Coin> coinsInTray;
@@ -21,17 +17,21 @@ public class VendingMachine {
     public final UserInterface keypad;
 
     /**
-     * 
-     * @param slot 
+     * selects the slot that the user chooses
+     * @param slot slot choice
      */
     void selectSlot(String slot) {
-        //ciara
         Item item = slots.get(slot.toLowerCase()).removeItem();
         if(item != null) itemsInTray.add(item);
     }
-
+    
+    
+    /**
+     * generates a list of coins that the bank accepts
+     * @param coin 
+     * @return a list of coins that the bank accepts
+     */
     public boolean acceptsCoin(Coin coin) {
-        //ciara
         return bank.containsKey(coin);
     }
     
@@ -44,9 +44,11 @@ public class VendingMachine {
         return bank.keySet();
     }
 
+    /**
+     * puts a coin into the bank and adds its value into the currentBalance
+     * @param coin the coin entered
+     */
     public void insertCoin(Coin coin) {
-        //ciara
-        //puts that coin into the bank and adds the coins value to the current balance
         if (acceptsCoin(coin)) {
             currentBalance += coin.value;
             bank.put(coin, bank.get(coin) + 1);
@@ -56,13 +58,59 @@ public class VendingMachine {
         }
     }
 
+    /**
+     * clears the itemsInTray and gives them to the buyer
+     * @return the items in the tray
+     */
     public List<Item> takeItems() {
-        //ciara
         List<Item> items = itemsInTray;
         itemsInTray = new ArrayList<>();
         return items;
     }
-
+    
+    /**
+     * clears the coinsInTray and gives them to the buyer
+     * @return the coins in the tray
+     */
+    public List<Coin> takeChange() {
+        //ciara
+        List<Coin> coins = coinsInTray;
+        coinsInTray = new ArrayList<>();
+        return coins;
+    }
+    
+    /**
+     * clears the bank and adds the coin types into the bank
+     * @param coins a set of coins that the bank will then accept
+     * @throws DoorClosedException 
+     */
+    public void setDenominations(Set<Coin> coins) throws DoorClosedException {
+    if (!open) {
+        throw new DoorClosedException();
+    }
+    bank = new HashMap<>();
+    for (Coin coin : coins) {
+        bank.put(coin, 0);
+    }
+    }
+    
+    /**
+     * initializes the vending machine
+     * @param code password to access the vending machine
+     */
+    public VendingMachine(String code) {
+        currentBalance = 0;
+        bank = new HashMap<>();
+        itemsInTray = new ArrayList<>();
+        coinsInTray = new ArrayList<>();
+        password = code;
+        slots = new HashMap<>();
+        keypad = new UserInterface(this);
+    }
+    
+    //Ciara's section Ends
+    //Daniel's section Begins
+    
     /**
      * Converts the current balance into coins and adds those coins into the coin tray
      */
@@ -71,12 +119,7 @@ public class VendingMachine {
         //puts coins equal to the current balance into the coin tray
     }
     
-    public List<Coin> takeChange() {
-        //ciara
-        List<Coin> coins = coinsInTray;
-        coinsInTray = new ArrayList<>();
-        return coins;
-    }
+    
     
     /**
      * Adds an item into an item slot
@@ -93,19 +136,7 @@ public class VendingMachine {
         slots.get(slot.toLowerCase()).addItem(item);
     }
 
-    public void setDenominations(Set<Coin> coins) throws DoorClosedException {
-        //ciara
-        // this first clears the bank, then adds each coin type to the bank
-        // this allows the bank to accept those types of coins
-        if (!open) {
-            // this can only be done if the vending machine is open
-            throw new DoorClosedException();
-        }
-        bank = new HashMap<>();
-        for (Coin coin : coins) {
-            bank.put(coin, 0);
-        }
-    }
+
     
     /**
      * Adds coins to the machines bank
@@ -228,16 +259,6 @@ public class VendingMachine {
         changeMode = mode;
     }
 
-    public VendingMachine(String code) {
-        //ciara
-        currentBalance = 0;
-        bank = new HashMap<>();
-        itemsInTray = new ArrayList<>();
-        coinsInTray = new ArrayList<>();
-        password = code;
-        slots = new HashMap<>();
-        keypad = new UserInterface(this);
-    }
 
     public enum ChangeMode {
         MAXIMIZE_COIN_COUNT, MINIMIZE_COINS_GIVEN

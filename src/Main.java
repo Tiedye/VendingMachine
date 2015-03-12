@@ -1,4 +1,4 @@
-
+//Shared section b/w Daniel and Ciara (authorship noted below)
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -6,24 +6,14 @@ import java.util.Scanner;
 import java.util.Set;
 import rd.vendingmachine.*;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author ciara
- */
 public class Main {
-
-    /**
-     * @param args the command line arguments
-     */
+    //Ciara's section begins
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        //creates a new vending machine with passcode
         VendingMachine vm = new VendingMachine("12345");
         vm.openDoor("12345");
+        //adds slots to the vending machine
         try {
             vm.addSlot("A1", 150);
             vm.addSlot("A2", 250);
@@ -34,6 +24,7 @@ public class Main {
             vm.addSlot("C1", 100);
             vm.addSlot("C2", 50);
             vm.addSlot("C3", 150);
+            //adds items into the vending machine
             for (int i = 0; i < 2; i++) {
                 vm.addItem("A1", new Item(50, "Mars", "calories: 242, fat: 9g, carbs: 37g, protein: 2g", "RD go ahead and google it"));
                 vm.addItem("A2", new Item(54, "Smarties", "calories: 140, fat: 4g, carbs: 24g, protein: 1g", "RD go ahead and google it"));
@@ -45,15 +36,21 @@ public class Main {
                 vm.addItem("C2", new Item(34, "Peanut M&M", "calories: 180, fat: 9g, carbs: 22g, protein: 3g ", "RD go ahead and google it"));
                 vm.addItem("C3", new Item(35, "Twizzler", "calories: 100, fat: 1g, carbs: 33g, protein: 1g", "RD go ahead and google it"));
             }
-
+            //creates the coins that are accepted
             Set<Coin> coins = new HashSet<>();
             coins.add(new Coin("quarter", 25));
             coins.add(new Coin("nickel", 5));
             coins.add(new Coin("dime", 10));
             coins.add(new Coin("loonie", 100));
             coins.add(new Coin("toonie", 200));
+            //puts those coins into the bank
             vm.setDenominations(coins);
             vm.closeDoor();
+            
+            //end of Ciara's contribution for the main method
+            //Daniel's section begins
+            
+            
         } catch (DoorClosedException e) {
             System.err.println("The door is closed.  You can't do that!");
         }
