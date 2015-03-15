@@ -1,4 +1,5 @@
 //Shared section b/w Daniel and Ciara (authorship noted below)
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -17,7 +18,7 @@ public class Main {
         try {
             vm.addSlot("A1", 150);
             vm.addSlot("A2", 250);
-            vm.addSlot("A3", 150);
+            vm.addSlot("A3", 160);
             vm.addSlot("B1", 200);
             vm.addSlot("B2", 125);
             vm.addSlot("B3", 175);
@@ -55,11 +56,9 @@ public class Main {
             }
             vm.addCoins(coinsToAdd);
             vm.closeDoor();
-            
+
             //end of Ciara's contribution for the main method
             //Daniel's section begins
-            
-            
         } catch (DoorClosedException e) {
             System.err.println("The door is closed.  You can't do that!");
         }
@@ -94,7 +93,9 @@ public class Main {
                 + "-addcoins [coin name] <coin name> <coin name> ...\n"
                 + "  |add coins to the machine\n\n"
                 + "-removecoins\n"
-                + "  |remove all the coins from the machine\n\n");
+                + "  |remove all the coins from the machine\n\n"
+                + "-setchangemode\n"
+                + "  |sets the method for which change shou be returned, the valid modes are MIN_COIN_COUNT and MAX_BANK_COUNT");
 
         while (true) {
             // gets the users command
@@ -350,6 +351,33 @@ public class Main {
                         }
                     } else {
                         System.err.println("That command doesn't take arguments.");
+                    }
+                    break;
+                case "setchangemode":
+                    if (command.length == 2) {
+                        // tries to set the change mode, gives an error if there is no such mode
+                        switch (command[1].toUpperCase()) {
+                            case "MIN_COIN_COUNT":
+                                try {
+                                    vm.setChangeMode(VendingMachine.ChangeMode.MINIMIZE_COINS_GIVEN);
+                                    System.out.println("Change mode set to " + command[1].toUpperCase());
+                                } catch (DoorClosedException e) {
+                                    System.err.println("The door is closed, you can't do that.");
+                                }
+                                break;
+                            case "MAX_BANK_COUNT":
+                                try {
+                                    vm.setChangeMode(VendingMachine.ChangeMode.MAXIMIZE_BANK_COUNT);
+                                    System.out.println("Change mode set to " + command[1].toUpperCase());
+                                } catch (DoorClosedException e) {
+                                    System.err.println("The door is closed, you can't do that.");
+                                }
+                                break;
+                            default:
+                                System.err.println("There is no such change mode " + command[1]);
+                        }
+                    } else {
+                        System.err.println("This command takes 2 arguments.");
                     }
                     break;
                 default:

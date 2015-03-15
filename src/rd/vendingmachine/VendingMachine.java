@@ -101,6 +101,7 @@ public class VendingMachine {
     public VendingMachine(String code) {
         currentBalance = 0;
         bank = new HashMap<>();
+        changeMode = ChangeMode.MAXIMIZE_BANK_COUNT;
         itemsInTray = new ArrayList<>();
         coinsInTray = new ArrayList<>();
         password = code;
@@ -116,11 +117,61 @@ public class VendingMachine {
      */
     public void getChange() {
         //daniel
-        List<Set<Map<Coin, Integer>>> state = new ArrayList<>(currentBalance);
-        for (int i = 0; i < currentBalance; i++){
-            Set<Map<Coin, Integer>> currentState = new HashSet<>();
+        Map<Coin, Integer> initialState = new HashMap<>();
+        for(Coin key: bank.keySet()){
+            initialState.put(key, 0);
+        }
+        Set<Map<Coin, Integer>> initialStates = new HashSet<>();
+        initialStates.add(initialState);
+        List<Set<Map<Coin, Integer>>> states = new ArrayList<>(currentBalance+1);
+        states.add(initialStates);
+        int lastPossibleReturn = 0;
+        for (int i = 1; i <= currentBalance; i++){
+            Set<Map<Coin, Integer>> currentStates = new HashSet<>();
             for (Coin coin : bank.keySet()){
-                if (i-coin.value > 0)
+                if (i-coin.value >= 0){
+                    for (Map<Coin, Integer> state : states.get(i-coin.value)){
+                        lastPossibleReturn = i;
+                        if (state.get(coin) + 1 <= bank.get(coin)){
+                            Map<Coin, Integer> newState = new HashMap<>(state);
+                            newState.put(coin, state.get(coin) + 1);
+                            currentStates.add(newState);
+                        }
+                    }
+                }
+            }
+            states.add(currentStates);
+        }
+        Set<Map<Coin, Integer>> finalStates = states.get(lastPossibleReturn);
+        Map<Coin, Integer> changeToGive = states.get(0).iterator().next();
+        if(changeMode == ChangeMode.MINIMIZE_COINS_GIVEN){
+            int coinCount = Integer.MAX_VALUE;
+            for (Map<Coin, Integer> state : finalStates){
+                int count = 0;
+                for (Coin coin: state.keySet()){
+                    count += state.get(coin);
+                }
+                if (count < coinCount){
+                    changeToGive = state;
+                    coinCount = count;
+                }
+            }
+        }else if (changeMode == ChangeMode.MAXIMIZE_BANK_COUNT){
+            int maxCoinCount = 0;
+            for (Map<Coin, Integer> state : finalStates){
+                int min = Integer.MAX_VALUE;
+                for (Coin coin: state.keySet()){
+                    min = Math.min(min, bank.get(coin) - state.get(coin));
+                }
+                if (min > maxCoinCount){
+                    changeToGive = state;
+                    maxCoinCount = min;
+                }
+            }
+        }
+        for (Coin coin: changeToGive.keySet()){
+            for(int i = 0; i < changeToGive.get(coin); i++){
+                coinsInTray.add(coin.copy());
             }
         }
         keypad.display = "READY";
@@ -268,7 +319,7 @@ public class VendingMachine {
 
 
     public enum ChangeMode {
-        MAXIMIZE_COIN_COUNT, MINIMIZE_COINS_GIVEN
+        MAXIMIZE_BANK_COUNT, MINIMIZE_COINS_GIVEN
     }
     
     /**
