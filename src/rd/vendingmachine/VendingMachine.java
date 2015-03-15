@@ -38,7 +38,7 @@ public class VendingMachine {
     
     /**
      * Gets all of the coins accepted by the machine.
-     * @return 
+     * @return a list of all the accepted coins
      */
     public Set<Coin> getAcceptedCoins(){
         return bank.keySet();
