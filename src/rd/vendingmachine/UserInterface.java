@@ -16,6 +16,7 @@ public class UserInterface {
     private String selection;
     //display to the screen
     String display;
+    int totalProfit;
     
     /**
      * initializes the vending machine
@@ -61,6 +62,7 @@ public class UserInterface {
                     parent.selectSlot(selection);
                     parent.getChange();
                     selection = "";
+                    totalProfit += parent.slots.get(selection).price;
                 }
                 else{
                     display = "NOT ENOUGH MONEY";
