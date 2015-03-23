@@ -383,6 +383,21 @@ public class Main {
                         System.err.println("This command takes 2 arguments.");
                     }
                     break;
+                case "viewbank":
+                    if (command.length == 1) {
+                        // displays the contents of the bank
+                        String representation;
+                        try {
+                            representation = vm.viewBank();
+                        } catch (DoorClosedException e) {
+                            System.err.println("The door is closed, you can't do that.");
+                            break;
+                        }
+                        System.out.println(representaion);
+                    } else {
+                        System.err.println("That command doesn't take arguments.");
+                    }
+                    break;
                 default:
                     // if its not a command print an error
                     System.err.println(command[0] + " is not a command.");
