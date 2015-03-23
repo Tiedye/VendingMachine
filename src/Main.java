@@ -385,6 +385,21 @@ public class Main {
                         System.err.println("This command takes 2 arguments.");
                     }
                     break;
+                case "viewbank":
+                    if (command.length == 1) {
+                        // displays the contents of the bank
+                        String representation;
+                        try {
+                            representation = vm.viewBank();
+                        } catch (DoorClosedException e) {
+                            System.err.println("The door is closed, you can't do that.");
+                            break;
+                        }
+                        System.out.println(representation);
+                    } else {
+                        System.err.println("That command doesn't take arguments.");
+                    }
+                    break;
                 default:
                     // if its not a command print an error
                     System.err.println(command[0] + " is not a command.");
@@ -396,17 +411,19 @@ public class Main {
 
     static String[] combineLinkedTerms(String[] terms) {
         // daniel
+        // this function iterates trough each term in the command and combines terms surrounded by quotation marks
         ArrayList<String> newTerms = new ArrayList<>();
         boolean inQuote = false;
         for (String term : terms) {
             if (inQuote) {
                 if (term.endsWith("\"")) {
+                    // handles the end of a quotaion block
                     inQuote = false;
                     term = term.substring(0, term.length() - 1);
                 }
-                newTerms.add(newTerms.size() - 1, newTerms.get(newTerms.size() - 1) + " " + term);
-                newTerms.remove(newTerms.size() - 1);
-            } else if (term.startsWith("\"") && !term.endsWith("\"")) {
+                newTerms.set(newTerms.size() - 1, newTerms.get(newTerms.size() - 1) + " " + term);
+            } else if (term.startsWith("\"") && (!term.endsWith("\"") || terms.length == 1)) {
+                // handles the begining of a quotaion block
                 inQuote = true;
                 term = term.substring(1);
                 newTerms.add(term);

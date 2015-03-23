@@ -120,6 +120,22 @@ public class VendingMachine {
         slots = new HashMap<>();
         keypad = new UserInterface(this);
     }
+    
+    /**
+     * Outputs the contents of the machines bank.
+     * 
+     * @return A string representation of the bank.
+     * @throws DoorClosedException 
+     */
+    public String viewBank() throws DoorClosedException{
+        // ciara
+        if (!open) {
+            // this can only be done if the vending machine is open
+            throw new DoorClosedException();
+        }
+        String bankBalance = bank.toString();
+        return bankBalance;
+    }
 
     //Ciara's section Ends
     //Daniel's section Begins
@@ -327,15 +343,6 @@ public class VendingMachine {
             return true;
         }
         return false;
-    }
-    
-    public String viewBank() throws DoorClosedException{
-        if (!open) {
-            // this can only be done if the vending machine is open
-            throw new DoorClosedException();
-        }
-        String bankBalance = bank.toString();
-        return bankBalance;
     }
 
     /**
