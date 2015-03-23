@@ -1,5 +1,4 @@
 //Shared section b/w Daniel and Ciara (authorship noted below)
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -8,7 +7,9 @@ import java.util.Set;
 import rd.vendingmachine.*;
 
 public class Main {
+
     //Ciara's section begins
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         //creates a new vending machine with passcode
@@ -390,7 +391,7 @@ public class Main {
     }
 
     static String[] combineLinkedTerms(String[] terms) {
-        //ciara
+        // ciara
         ArrayList<String> newTerms = new ArrayList<>();
         boolean inQuote = false;
         for (String term : terms) {
@@ -401,7 +402,7 @@ public class Main {
                 }
                 newTerms.add(newTerms.size() - 1, newTerms.get(newTerms.size() - 1) + " " + term);
                 newTerms.remove(newTerms.size() - 1);
-            } else if (term.startsWith("\"")) {
+            } else if (term.startsWith("\"") && !term.endsWith("\"")) {
                 inQuote = true;
                 term = term.substring(1);
                 newTerms.add(term);
