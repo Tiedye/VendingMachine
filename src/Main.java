@@ -58,8 +58,7 @@ public class Main {
             vm.addCoins(coinsToAdd);
             vm.closeDoor();
 
-            //end of Ciara's contribution for the main method
-            //Daniel's section begins
+            
         } catch (DoorClosedException e) {
             System.err.println("The door is closed.  You can't do that!");
         }
@@ -97,7 +96,10 @@ public class Main {
                 + "  |remove all the coins from the machine\n\n"
                 + "-setchangemode\n"
                 + "  |sets the method for which change shou be returned, the valid modes are MIN_COIN_COUNT and MAX_BANK_COUNT");
-
+            
+            //end of Ciara's contribution for the main method
+            //Daniel's section begins
+        
         while (true) {
             // gets the users command
             System.out.print(">");
@@ -391,7 +393,7 @@ public class Main {
     }
 
     static String[] combineLinkedTerms(String[] terms) {
-        // ciara
+        // daniel
         ArrayList<String> newTerms = new ArrayList<>();
         boolean inQuote = false;
         for (String term : terms) {
