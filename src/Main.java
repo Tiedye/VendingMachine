@@ -395,7 +395,7 @@ public class Main {
                             System.err.println("The door is closed, you can't do that.");
                             break;
                         }
-                        System.out.println(representaion);
+                        System.out.println(representation);
                     } else {
                         System.err.println("That command doesn't take arguments.");
                     }
