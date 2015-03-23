@@ -295,7 +295,7 @@ public class Main {
                             }
                             try {
                                 // set the slots price to the given value
-                                vm.slotPrice(input, price);
+                                vm.slotPrice(command[1], price);
                                 System.out.println("Slot " + command[1] + " set to price " + price + ".");
                             } catch (DoorClosedException e) {
                                 System.err.println("The door is closed, you can't do that.");
