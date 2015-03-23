@@ -84,6 +84,8 @@ public class Main {
                 + "  |open the vending machine door so you can change it\n\n"
                 + "-closedoor\n"
                 + "  |close it so other people can't steal stuff\n\n"
+                + "-viewbank\n"
+                + "  |view amount of money in bank\n\n"
                 + "-additem [slot] [name] <weight> <nutrition> <ingredients>\n"
                 + "  |add an item to the vending machine\n\n"
                 + "-addslot [slot to add]\n"

@@ -328,6 +328,15 @@ public class VendingMachine {
         }
         return false;
     }
+    
+    public String viewBank() throws DoorClosedException{
+        if (!open) {
+            // this can only be done if the vending machine is open
+            throw new DoorClosedException();
+        }
+        String bankBalance = bank.toString();
+        return bankBalance;
+    }
 
     /**
      * Sets the way in which change is given from the machine
@@ -365,5 +374,6 @@ public class VendingMachine {
         }
         return string.toString();
     }
+    
 
 }
