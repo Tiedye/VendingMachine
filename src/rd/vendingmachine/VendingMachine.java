@@ -193,6 +193,7 @@ public class VendingMachine {
                 // for each coin to be returned take that coin form the bank and put it in the tray
             }
         }
+        currentBalance = 0;
         keypad.display = "READY";
     }
 

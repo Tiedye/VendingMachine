@@ -46,6 +46,6 @@ public class ItemSlot extends Stack<Item> {
      */
     @Override
     public String toString() {
-        return (size() != 0 ? firstElement().name : "") + " (" + NumberFormat.getCurrencyInstance().format(price / 100.0) + ")";
+        return (size() != 0 ? lastElement().name : "") + " (" + NumberFormat.getCurrencyInstance().format(price / 100.0) + ")";
     }
 }
